@@ -27,7 +27,6 @@ extern "C"{
 #define AUTH_TOKEN_PROVIDER_EXTERN
 #endif
 
-#include <stdio.h>
 #include "secure_debug_manager.h"
 
 /**
@@ -60,25 +59,25 @@ typedef enum ATPReturnCode
  * pDebugIF->callbacks->f_ProgressIndicationCallback should be called with {@link SDMInitStep}
  * SDM_Creating_Secure_Debug_Certificate with the current percent complete value.
  *
- * @param[in] pSocId SoC ID of the debugged system. Received by the Get SoC ID command.
- * @param[in] socIdLen Size in bytes of the SoC ID.
- * @param[in] pChallenge Nonce that is randomized by the debugged system when it
+ * @param[in]  pSocId SoC ID of the debugged system. Received by the Get SoC ID command.
+ * @param[in]  socIdLen Size in bytes of the SoC ID.
+ * @param[in]  pChallenge Nonce that is randomized by the debugged system when it
  *                       received the Get SoC ID command. The nonce must be used
  *                       while signing the debug certificate with the SoCID. This response
  *                       will not be sent by the debugged system if the IDR command was
  *                       not issued. When the debugged system does not support
  *                       challenge response, it fills this field with zeroes.
- * @param[in] challangeLen Size in bytes of challenge.
+ * @param[in]  challengeLen Size in bytes of challenge.
  * @param[out] pCertificateBuffer A client supplied buffer to receive the certificate data.
- * @param[in] bufferLen Size in bytes of the client supplied certificate buffer.
+ * @param[in]  bufferLen Size in bytes of the client supplied certificate buffer.
  * @param[out] actualBufferLen Updated with the number of bytes used in the certificate data buffer.
                                It should be less or equal to bufferLen.
- * @param[in] pDebugIf {@link SDM_Init} connection details. Only used for progress reporting callbacks.
+ * @param[in]  pDebugIf {@link SDM_Init} connection details. Only used for progress reporting callbacks.
 */
 AUTH_TOKEN_PROVIDER_EXTERN
-ATPReturnCode ATP_GenerateSecureDebugCertificate (char *pSocId, size_t socIdLen,
-                                         char *pChallenge, size_t challengeLen,
-                                         char *pCertificateBuffer, size_t bufferLen, size_t *actualBufferLen,
+ATPReturnCode ATP_GenerateSecureDebugCertificate (char* pSocId, size_t socIdLen,
+                                         char* pChallenge, size_t challengeLen,
+                                         char* pCertificateBuffer, size_t bufferLen, size_t* actualBufferLen,
                                          SDMDebugIf* pDebugIf);
 
 #ifdef __cplusplus

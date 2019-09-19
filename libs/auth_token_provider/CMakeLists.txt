@@ -1,0 +1,19 @@
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.0)
+PROJECT (csapbcom_example)
+
+ADD_LIBRARY (auth_token_provider SHARED
+    ${CMAKE_CURRENT_SOURCE_DIR}/auth_token_provider.cpp
+)
+
+ADD_DEFINITIONS (-DAUTH_TOKEN_PROVIDER_EXPORT_SYMBOLS)
+
+INCLUDE_DIRECTORIES (${DEPENDS_INC_PATH})
+
+TARGET_LINK_LIBRARIES (auth_token_provider)
+IF (WIN32)
+    INSTALL (TARGETS auth_token_provider RUNTIME DESTINATION output)
+    INSTALL (TARGETS auth_token_provider RUNTIME DESTINATION arm_ds)
+ELSE ()
+    INSTALL (TARGETS auth_token_provider LIBRARY DESTINATION output)
+    INSTALL (TARGETS auth_token_provider LIBRARY DESTINATION arm_ds)
+ENDIF ()

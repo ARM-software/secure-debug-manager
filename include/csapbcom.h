@@ -27,11 +27,11 @@
   #define CSAPBCOM_EXTERN
 #endif
 
-#include "stdint.h"
-#include "stddef.h"
+#include <stdint.h>
+#include <stddef.h>
 
 /**
- * \brief Connection information used to specifit the debug vehicle and SDC-600 COM port device
+ * \brief Connection information used to specify the debug vehicle and SDC-600 COM port device
  */
 CSAPBCOM_EXTERN typedef struct CSAPBCOMConnectionDescription
 {
@@ -109,10 +109,10 @@ static const int CSAPBCOMInvalidHandle = 0xFFFF;
  *
  * \param[out] versionDetails Client supplied buffer to retrive an
  *                            implementation defined version string. The returned
- *                            string will be NULL terminated.
+ *                            string will be NUL terminated.
  *
  * \param[in] versionDetailsLength The size in bytes of the supplied
- *                                 versionDetails buffer. Note that a NULL
+ *                                 versionDetails buffer. Note that a NUL
  *                                 terminating character will always be appended
  *                                 so clients must account for this extra size.
  *                                 Should an overflow be encountered the string
@@ -173,7 +173,7 @@ CSAPBCOM_EXTERN CSAPBCOMReturnCode CSAPBCOM_Disconnect(CSAPBCOMHandle handle);
  * \brief Read generic data from the APBCOM rxEngine.
  *
  * Data is read according to the RxEngine width so outData is not padded with
- * NULL bytes.
+ * NUL bytes.
  *
  * \param[in] handle Handle previously retrieved by call to CSAPBCOM_Open()
  *
@@ -192,7 +192,7 @@ CSAPBCOM_EXTERN CSAPBCOMReturnCode CSAPBCOM_ReadData(CSAPBCOMHandle handle,
  * \brief Write generic data to the APBCOM TxEngine.
  *
  * Data is written according to the TxEngine width so there is no need to pad inData
- * with NULL bytes.
+ * with NUL bytes.
  *
  * Recommended for byte flags and small messages.
  *

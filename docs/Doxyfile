@@ -567,7 +567,6 @@ WARN_LOGFILE           =
 INPUT                  = ../include/csapbcom.h \
                          ../include/secure_debug_manager.h \
 						 ../include/ext_com_port_driver.h \
-						 ../include/ext_com_port_def.h \
 						 ../include/auth_token_provider.h \
                          ./mainpage.md
 						 

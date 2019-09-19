@@ -1,0 +1,30 @@
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.0)
+PROJECT (sdc600_debugger_libraries)
+
+SET (CMAKE_C_STANDARD 99)
+
+IF(WIN32)
+    SET (DEPENDS_LIB_PATH ${CMAKE_SOURCE_DIR}/depends/win_32-x86_64)
+ELSE()
+    SET (DEPENDS_LIB_PATH ${CMAKE_SOURCE_DIR}/depends/linux-x86_64)
+ENDIF()
+SET (DEPENDS_INC_PATH ${CMAKE_SOURCE_DIR}/include)
+
+INCLUDE_DIRECTORIES (
+    ${DEPENDS_INC_PATH}
+    ${CMAKE_SOURCE_DIR}/src)
+
+ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/csapbcom)
+ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/ext_com_port)
+ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/secure_debug_manager)
+ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/auth_token_provider)
+
+IF (NOT LIBS_ONLY)
+    ADD_EXECUTABLE (debugger_example
+        ${CMAKE_SOURCE_DIR}/example/main.c
+    )
+    TARGET_LINK_LIBRARIES (debugger_example secure_debug_manager csapbcom)
+    INSTALL (TARGETS debugger_example RUNTIME DESTINATION output)
+ENDIF()
+
+SET (CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR})

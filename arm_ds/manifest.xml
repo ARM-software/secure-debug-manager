@@ -1,0 +1,6 @@
+<secure_debug_manager_lib>
+	<lib_name>secure_debug_manager</lib_name>
+	<dep>auth_token_provider</dep>
+	<dep>csapbcom</dep>
+	<dep>ext_com_port</dep>
+</secure_debug_manager_lib>

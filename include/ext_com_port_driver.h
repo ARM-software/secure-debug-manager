@@ -87,16 +87,16 @@ EXT_COM_PORT_EXTERN typedef enum ECPDReturnCode {
  *
  * @param[in] resetType Required reset type. Should be the same as used with
                         Secure Debug Manager {@link SDM_Init}.
- * @param[out] IDResponseBuffer Client supplied buffer to receive the IDA response.
- * @param[in] IDBufferLength Size in bytes of the IDA response client supplied buffer.
+ * @param[out] idResponseBuffer Client supplied buffer to receive the IDA response.
+ * @param[in] idBufferLength Size in bytes of the IDA response client supplied buffer.
  * @param[in] pDebugIF The same SDMDebugIf as the Secure Debug Manger received
  *                     from the debugger at {@link SDM_Init}, with the same callbacks
  *                     and connection details.
  */
 EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_Init(SDMResetType resetType,
-                       uint8_t *idResponseBuffer,
+                       uint8_t* idResponseBuffer,
                        size_t idBufferLength,
-                       SDMDebugIf *pDebugIF);
+                       SDMDebugIf* pDebugIF);
 
 
 /**
@@ -140,7 +140,7 @@ EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_RReboot(void);
                from the TxBuffer, it should be equal to TxBufferLength.
                Does not count the FLAG_START and FLAG_END flags.
  */
-EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_Tx(uint8_t *txBuffer, size_t txBufferLength, size_t *actualLength);
+EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_Tx(uint8_t* txBuffer, size_t txBufferLength, size_t* actualLength);
 
 /**
  * At its receive side, the External COM port driver receives from the SDC-600
@@ -169,7 +169,7 @@ EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_Tx(uint8_t *txBuffer, size_t txBuffe
                            or equal to rxBufferLength. Does not count the FLAG_START, intermediate FLAG_ESC
                            and FLAG_END flags.
  */
-EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_Rx(uint8_t *rxBuffer, size_t rxBufferLength, size_t *actualLength);
+EXT_COM_PORT_EXTERN ECPDReturnCode EComPort_Rx(uint8_t* rxBuffer, size_t rxBufferLength, size_t* actualLength);
 
 #ifdef __cplusplus
 }

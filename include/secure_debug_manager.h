@@ -75,12 +75,16 @@ SDM_EXTERN typedef void(*f_progressIndicationCallback)(uint32_t step, uint8_t pe
 
 /**
 * \brief Collection of callback functions for SDM_Init() and EComPort_Init()
+*
+* Both f_nSRSTStageX take a void* context parameter. When invoked with
+* the reference libraries, the context parameter contains the CSAPBCOM
+* handle to facilitate the system reset, if necessary.
 */
-SDM_EXTERN typedef struct SDMCallbaks {
+SDM_EXTERN typedef struct SDMCallbacks {
     f_progressIndicationCallback f_progressIndicationCallbackFunc; /*!<  Progress report callback*/
-    uint8_t(*f_nSRSTStage1)(); /*!<  nSRST stage 1 callback  */
-    uint8_t(*f_nSRSTStage2)(); /*!<  nSRST stage 2 callback  */
-} SDMCallbaks;
+    uint8_t(*f_nSRSTStage1)(void*); /*!<  nSRST stage 1 callback  */
+    uint8_t(*f_nSRSTStage2)(void*); /*!<  nSRST stage 2 callback  */
+} SDMCallbacks;
 
 /**
 * \brief Collection of connection details for SDM_Init() and EComPort_Init()
@@ -88,7 +92,7 @@ SDM_EXTERN typedef struct SDMCallbaks {
 SDM_EXTERN typedef struct SDMDebugIf {
     uint32_t version; /*!< Client interface version  */
     void* pTopologyDetails; /*!< Topology/connection details for I/O driver and debug vehicle */
-    SDMCallbaks *callbacks; /*!< Callback collection */
+    SDMCallbacks* callbacks; /*!< Callback collection */
 } SDMDebugIf;
 
 
@@ -112,7 +116,7 @@ SDM_EXTERN typedef struct SDMDebugIf {
  * @param[in] resetType Required reset type.
  * @param[in] pDebugIF Connection details for {@link SDM_Init} and {@link EComPort_Init}.
  */
-SDM_EXTERN SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf *pDebugIF);
+SDM_EXTERN SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF);
 
 /**
  * This function is called by the debugger to resume the boot of the remote platform.
