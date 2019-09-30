@@ -2,10 +2,6 @@ SDC-600 debugger libraries and example
 ======================================
 The Arm CoreSight [SDC-600 Secure Debug Channel](https://developer.arm.com/ip-products/system-ip/coresight-debug-and-trace/coresight-components/coresight-sdc-600-secure-debug-channel), provides a dedicated path to a debugged system for authenticating debug accesses.
 
-A demo of detecting and unlocking the Arm Secure Debug Channel using Arm Development Studio can be viewed [here](https://developer.arm.com/tools-and-software/embedded/arm-development-studio/learn/resources/media-articles/2019/04/sdc-600).
-
-Documentation for the APIs can found [here](https://arm-software.github.io/sdc600-debugger/index.html).
-
 The SDC-600 debugger libraries and examples project contains:
 * Debugger-side libraries
     * Secure Debug Manager
@@ -13,7 +9,7 @@ The SDC-600 debugger libraries and examples project contains:
     * External COM Port driver
     * CSAPBCOM CoreSight interface
 * Example application
-* Documentation
+* [Documentation](https://arm-software.github.io/sdc600-debugger/index.html)
 
 Requirements
 ------------
@@ -92,6 +88,8 @@ For example using the MPS3 platform in example/data:
 Arm Development Studio integration
 ----------------------------------
 The ``arm_ds/`` directory contains a manifest.xml file along with the built libraries. The manifest file is used by Arm DS to load the SDC-600 debugger libraries for debug connections. The provided ``manifest.xml`` is for the reference library implementations in this package. The schema for the manifest file is described in ``sdm_manifest.xsd``.
+
+A demo of detecting and unlocking the Arm Secure Debug Channel using Arm Development Studio can be viewed [here](https://developer.arm.com/tools-and-software/embedded/arm-development-studio/learn/resources/media-articles/2019/04/sdc-600).
 
 Support
 -------
