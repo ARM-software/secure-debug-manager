@@ -334,12 +334,17 @@ SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF)
     */
     SDC600_ASSERT_ERROR(CSAPBCOM_Connect(gHandle), CSAPBCOM_SUCCESS, SDM_FAIL_IO);
 
-    // ConnectionDescription no longer needed, use to pass the CSAPBCOM handle to Ext COM port driver
-    pDebugIF->pTopologyDetails = &gHandle;
+    // Use SDMDebugIf->pTopologyDetails details to pass the CSAPBCOM handle to Ext COM port driver
+    // Create full copy to preserve callers ConnectionDescription
+    SDMDebugIf* tmpDebugIf = (SDMDebugIf*) malloc(sizeof(SDMDebugIf));
+    SDC600_ASSERT_ERROR(tmpDebugIf != NULL, true, SDM_FAIL_INTERNAL);
+    tmpDebugIf->callbacks = pDebugIF->callbacks;
+    tmpDebugIf->pTopologyDetails = &gHandle;
+    tmpDebugIf->version = pDebugIF->version;
 
     // SDMInit calls the EComPort_Init.
     // Upon fail, exit with the fail code.
-    ecpdRes = EComPort_Init(resetType, idResBuff, sizeof(idResBuff), pDebugIF);
+    ecpdRes = EComPort_Init(resetType, idResBuff, sizeof(idResBuff), tmpDebugIf);
     if (ecpdRes != ECPD_SUCCESS)
     {
         SDC600_LOG_ERR(ENTITY_NAME, "EComPort_Init failed [0x%04x]\n", ecpdRes);
@@ -448,6 +453,9 @@ SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF)
     // debug certificate at early boot (ROM implementation).
 
 bail:
+
+    if (tmpDebugIf != NULL)
+        free(tmpDebugIf);
 
     if (socIdBuf != NULL)
         free(socIdBuf);
