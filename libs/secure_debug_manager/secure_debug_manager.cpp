@@ -324,6 +324,8 @@ SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF)
     uint32_t status = 0;
     uint8_t waitForResumeBoot = 0;
 
+    SDMDebugIf* tmpDebugIf = NULL;
+
     /*
     * First, open a connection to the CSAPBCOM library and the debug vehicle
     */
@@ -336,7 +338,7 @@ SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF)
 
     // Use SDMDebugIf->pTopologyDetails details to pass the CSAPBCOM handle to Ext COM port driver
     // Create full copy to preserve callers ConnectionDescription
-    SDMDebugIf* tmpDebugIf = (SDMDebugIf*) malloc(sizeof(SDMDebugIf));
+    tmpDebugIf = (SDMDebugIf*) malloc(sizeof(SDMDebugIf));
     SDC600_ASSERT_ERROR(tmpDebugIf != NULL, true, SDM_FAIL_INTERNAL);
     tmpDebugIf->callbacks = pDebugIF->callbacks;
     tmpDebugIf->pTopologyDetails = &gHandle;
