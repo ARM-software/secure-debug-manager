@@ -38,7 +38,7 @@
                     SDC600_LOG_PRINT("%-40.40s:% 5d : %-5.5s : %-10.10s : ", __func__, __LINE__, _level, _who)
 
 #define SDC600_LOG_PRINT_LINE(_who, _level, _format, ...) \
-    printf("%-40.40s:% 5d : %-5.5s : %-10.10s : "_format, __func__, __LINE__, _who, _level, ##__VA_ARGS__)
+    printf("%-40.40s:% 5d : %-5.5s : %-10.10s : " _format, __func__, __LINE__, _who, _level, ##__VA_ARGS__)
 
 #if SDC600_LOG_LEVEL <= SDC600_LOG_LVL_ERROR
 #define SDC600_LOG_ERR(_who, _format, ...) \
