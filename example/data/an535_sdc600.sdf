@@ -65,8 +65,8 @@
                 <config_item name="Linked_SRST_TRST">0</config_item>
                 <config_item name="SWOBaudRate">0</config_item>
                 <config_item name="SWOMode">1</config_item>
-                <config_item name="LVDSProbeMode">2</config_item>
-                <config_item name="SWJEnable">1</config_item>
+                <config_item name="ProbeMode">1</config_item>
+                <config_item name="SWJEnable">0</config_item>
                 <config_item name="UseDeprecatedSWJ">0</config_item>
                 <config_item name="UserOut_P1">1</config_item>
                 <config_item name="UserOut_P2">0</config_item>

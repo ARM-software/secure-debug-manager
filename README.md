@@ -29,7 +29,7 @@ An example directory structure on Linux looks like:
 	|- sdc600-debugger (this repository)/
 		|- depends/
 			|- linux-x86_64/
-			|- librddi-debug-rvi.so.2
+				|- librddi-debug-rvi.so.2
 			|- ...
 		|- example/
 		|- include/
@@ -84,6 +84,8 @@ $ debugger_example(.exe) <DSTREAM_ADDRESS> <SDF_PATH> <RESET_TYPE> <AP_INDEX>
 
 For example using the MPS3 platform in example/data:
 `$ ./debugger_example TCP:<DSTREAM-ADDRESS> example/data/an535_sdc600.sdf 1 29`
+
+:information_source: Note: If connecting to the debug vehicle via USB, additional tools are needed from the Arm Development Studio install directory. Add the following to your PATH environment variable before running the example: `<Install Directory>/sw/debughw/tools2/`.
 
 Arm Development Studio integration
 ----------------------------------
