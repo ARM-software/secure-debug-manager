@@ -17,12 +17,14 @@
 
 #include "ext_com_port_driver.h"
 
+#define ENTITY_NAME "ECPD"
+
 /******************************************************************************************************
  *
- * Macros
+ * Build options
  *
  ******************************************************************************************************/
-#define ENTITY_NAME                 "ECPD"
+#define COM_PORT_HW_TX_BLOCKING true
 
 /******************************************************************************************************
  *
@@ -144,15 +146,26 @@ bail:
 static ECPDReturnCode EComSendBlock(uint8_t* byteData, size_t dataLen)
 {
     ECPDReturnCode res = ECPD_SUCCESS;
-    CSAPBCOMReturnCode result = CSAPBCOM_SUCCESS;
-
-    result = CSAPBCOM_WriteData(gHandle, 1, dataLen, byteData);
+#if COM_PORT_HW_TX_BLOCKING == true
+    CSAPBCOMReturnCode result = CSAPBCOM_WriteData(gHandle, 1, dataLen, byteData);
     if (result != CSAPBCOM_SUCCESS)
     {
         SDC600_LOG_ERR(ENTITY_NAME, "CSAPBCOM_WriteData failed with code: 0x%x\n", result);
         res = ECPD_TX_FAIL;
         goto bail;
     }
+#else
+    for (int i = 0; i < dataLen; i++)
+    {
+        res = EComSendByte(byteData[i]);
+        if (res != ECPD_SUCCESS)
+       {
+           SDC600_LOG_ERR(ENTITY_NAME, "EComSendByte failed with code: 0x%x\n", res);
+           res = ECPD_TX_FAIL;
+           goto bail;
+       }
+    }
+#endif
 
 bail:
     return res;
