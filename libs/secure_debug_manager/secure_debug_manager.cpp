@@ -16,16 +16,15 @@
 #include "auth_token_provider.h"
 #include "csapbcom.h"
 
+#define ENTITY_NAME     "SDM"
+
 /******************************************************************************************************
  *
- * Macros
+ * Build options
  *
  ******************************************************************************************************/
-#define ENTITY_NAME     "SDM"
-#define BYPASS_SDM_END  1
+#define BYPASS_SDM_END  false
 #define SDP_CERT_TYPE   0
-#define BLOCK           (true)
-#define NO_BLOCK        (!BLOCK)
 
 /******************************************************************************************************
  *
@@ -508,7 +507,7 @@ SDMReturnCode SDM_End(SDMResetType ResetType)
     */
     SDC600_ASSERT_ERROR(CSAPBCOM_Connect(gHandle), CSAPBCOM_SUCCESS, SDM_FAIL_IO);
 
-#if BYPASS_SDM_END == 1
+#if BYPASS_SDM_END == true
     SDC600_LOG_WARN(ENTITY_NAME, "SDM_End is bypassed\n");
     goto bail;
 #endif
