@@ -16,12 +16,6 @@
 #include "auth_token_provider.h"
 #include "csapbcom.h"
 
-#ifndef WIN32
-#include <time.h>
-#else
-#include <Windows.h>
-#endif
-
 /******************************************************************************************************
  *
  * Macros
@@ -413,17 +407,6 @@ SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF)
     // call pDebugIF->f_ProgressIndicationCallback with SDMInitStep = SDM_Received_Secure_Debug_Certificate with the current percent complete value
     if (progIndFunc != NULL)
         progIndFunc(SDM_Received_Secure_Debug_Certificate, 50);
-
-    // CSAPBCOM_WriteData can fail on low-cost probes after the SDP_INT_DEB_CERT cmd but before the cert data
-    // Delay 50ms
-#ifdef WIN32
-    Sleep(50);
-#else
-    struct timespec delayTime;
-    delayTime.tv_nsec = 50L * 1000 * 1000;
-    delayTime.tv_sec  = 0;
-    nanosleep(&delayTime, NULL);
-#endif
 
     // Form an Introduce Secure Debug Certificate command with the calculated secure debug certificate.
     // Call the EComPort_Tx to transmit the command to the debugged system.
