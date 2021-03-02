@@ -32,7 +32,7 @@ typedef enum sdp_cert_type_t {
 } sdp_cert_type_t;
 
 typedef uint8_t identification_t[6];
-typedef uint8_t soc_id_t[8];
+typedef uint8_t soc_id_t[32];
 typedef uint8_t nonce_t[32];
 typedef uint8_t cert_t[3840];
 
