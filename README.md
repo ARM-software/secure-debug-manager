@@ -18,8 +18,12 @@ Requirements
     * Copy header files to `<this repository>/include/`
     * Copy Redistributable and development libraries to `<this repository>/depends/<platform>/`
         * See individual README.txt located in `<this repository>/depends/<platform>/` for further details.
-
-If you are building tests, ensure that you have the [Googletest](https://github.com/google/googletest) project cloned alongside this repository before you run CMake.
+* [Googletest](https://github.com/google/googletest) project cloned alongside this repository. Only required if you are building tests.
+* Configure build option definitions in source:
+    * `libs/secure_debug_manager/secure_debug_manager.cpp`
+        * `BYPASS_SDM_END` - Whether calls to SDM_End are bypassed and immediately return without error. Useful if the Secure Debug Handler does not implement the link release flags sent by SDM_End. Default: false.
+    * `libs/ext_com_port/ext_com_port_driver.cpp`
+        * `COM_PORT_HW_TX_BLOCKING` - Whether the External COM Port Driver uses hardware blocking by sending data via the COM port Data Blocking Register (DBR), rather than the non-blocking Data Register (DR) while checking the Status Register (SR) for the TX FIFO status. Useful if the debug vehicle is not capable of long hardware blocking periods, however disabling this will have a performance impact. Default: true.
 
 An example directory structure on Linux looks like:
 

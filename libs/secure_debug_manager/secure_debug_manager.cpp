@@ -16,22 +16,15 @@
 #include "auth_token_provider.h"
 #include "csapbcom.h"
 
-#ifndef WIN32
-#include <time.h>
-#else
-#include <Windows.h>
-#endif
+#define ENTITY_NAME     "SDM"
 
 /******************************************************************************************************
  *
- * Macros
+ * Build options
  *
  ******************************************************************************************************/
-#define ENTITY_NAME     "SDM"
-#define BYPASS_SDM_END  1
+#define BYPASS_SDM_END  false
 #define SDP_CERT_TYPE   0
-#define BLOCK           (true)
-#define NO_BLOCK        (!BLOCK)
 
 /******************************************************************************************************
  *
@@ -414,17 +407,6 @@ SDMReturnCode SDM_Init(SDMResetType resetType, SDMDebugIf* pDebugIF)
     if (progIndFunc != NULL)
         progIndFunc(SDM_Received_Secure_Debug_Certificate, 50);
 
-    // CSAPBCOM_WriteData can fail on low-cost probes after the SDP_INT_DEB_CERT cmd but before the cert data
-    // Delay 50ms
-#ifdef WIN32
-    Sleep(50);
-#else
-    struct timespec delayTime;
-    delayTime.tv_nsec = 50L * 1000 * 1000;
-    delayTime.tv_sec  = 0;
-    nanosleep(&delayTime, NULL);
-#endif
-
     // Form an Introduce Secure Debug Certificate command with the calculated secure debug certificate.
     // Call the EComPort_Tx to transmit the command to the debugged system.
     SDC600_ASSERT(SDM_send_introduce_debug_cert((sdp_cert_type_t)SDP_CERT_TYPE, cert, certLen), SDM_SUCCESS);
@@ -525,7 +507,7 @@ SDMReturnCode SDM_End(SDMResetType ResetType)
     */
     SDC600_ASSERT_ERROR(CSAPBCOM_Connect(gHandle), CSAPBCOM_SUCCESS, SDM_FAIL_IO);
 
-#if BYPASS_SDM_END == 1
+#if BYPASS_SDM_END == true
     SDC600_LOG_WARN(ENTITY_NAME, "SDM_End is bypassed\n");
     goto bail;
 #endif
