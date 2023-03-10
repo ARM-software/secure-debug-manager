@@ -1,5 +1,8 @@
 SDC-600 debugger libraries and example
 ======================================
+
+:warning: This branch is archived and no longer maintained.
+
 The Arm CoreSight [SDC-600 Secure Debug Channel](https://developer.arm.com/ip-products/system-ip/coresight-debug-and-trace/coresight-components/coresight-sdc-600-secure-debug-channel), provides a dedicated path to a debugged system for authenticating debug accesses.
 
 The SDC-600 debugger libraries and examples project contains:
