@@ -8,12 +8,10 @@
   <!-- List of libraries to load. -->
   <libraries os="windows" arch="x86_64">
     <lib path="secure_debug_manager.dll"/>
-    <lib path="psa_adac_sdm.dll"/>
   </libraries>
 
-  <libraries os="linux" arch="aarch64">
-    <lib path="secure_debug_manager.so"/>
-    <lib path="psa_adac_sdm.so"/>
+  <libraries os="linux" arch="x86_64">
+    <lib path="libsecure_debug_manager.so"/>
   </libraries>
 
   <!-- Functionality supported and/or required by the SDM implementation. -->

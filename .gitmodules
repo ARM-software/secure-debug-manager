@@ -1,0 +1,9 @@
+[submodule "depends/mbedtls"]
+	path = depends/mbedtls
+	url = https://github.com/Mbed-TLS/mbedtls.git
+[submodule "depends/psa-adac"]
+	path = depends/psa-adac
+	url = https://git.trustedfirmware.org/shared/psa-adac.git
+[submodule "depends/sdm-api"]
+	path = depends/sdm-api
+	url = https://github.com/ARM-software/sdm-api
