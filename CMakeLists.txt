@@ -1,30 +1,55 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.1.0)
-PROJECT (sdc600_debugger_libraries)
+PROJECT (psa-adac_sdm_sdc600)
 
 SET (CMAKE_C_STANDARD 99)
 
-IF(WIN32)
-    SET (DEPENDS_LIB_PATH ${CMAKE_SOURCE_DIR}/depends/win_32-x86_64)
-ELSE()
-    SET (DEPENDS_LIB_PATH ${CMAKE_SOURCE_DIR}/depends/linux-x86_64)
-ENDIF()
-SET (DEPENDS_INC_PATH ${CMAKE_SOURCE_DIR}/include)
+IF (UNIX)
+    ADD_COMPILE_OPTIONS(-fPIC -fpic)
+ENDIF ()
 
-INCLUDE_DIRECTORIES (
-    ${DEPENDS_INC_PATH}
-    ${CMAKE_SOURCE_DIR}/src)
-
-ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/csapbcom)
-ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/ext_com_port)
-ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/secure_debug_manager)
-ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/libs/auth_token_provider)
-
-IF (NOT LIBS_ONLY)
-    ADD_EXECUTABLE (debugger_example
-        ${CMAKE_SOURCE_DIR}/example/main.c
+FUNCTION (GIT_APPLY_PATCH GIT_DIR PATCH_FILE)
+    EXECUTE_PROCESS(COMMAND git apply --check --reverse ${PATCH_FILE}
+        WORKING_DIRECTORY ${GIT_DIR}
+        ERROR_QUIET
+        RESULT_VARIABLE CHECK_REVERSE_RESULT
     )
-    TARGET_LINK_LIBRARIES (debugger_example secure_debug_manager csapbcom)
-    INSTALL (TARGETS debugger_example RUNTIME DESTINATION output)
-ENDIF()
+
+    IF (NOT CHECK_REVERSE_RESULT EQUAL "0")
+        EXECUTE_PROCESS(COMMAND git apply ${PATCH_FILE}
+            WORKING_DIRECTORY ${GIT_DIR}
+            COMMAND_ERROR_IS_FATAL ANY
+        )
+    ENDIF ()
+ENDFUNCTION ()
+
+# mbedtls
+INCLUDE_DIRECTORIES (${CMAKE_SOURCE_DIR}/depends/mbedtls/include)
+SET (LIB_INSTALL_DIR ${CMAKE_BINARY_DIR}/mbedtls)
+ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/depends/mbedtls/library)
+
+IF (WIN32)
+    # apply patch for https://github.com/Mbed-TLS/mbedtls/issues/7087
+    GIT_APPLY_PATCH(${CMAKE_SOURCE_DIR}/depends/mbedtls ${CMAKE_SOURCE_DIR}/depends/mbedtls-2.28_msvc_fix.patch)
+ENDIF ()
+
+# psa-adac
+SET (PSA_ADAC_ROOT ${CMAKE_SOURCE_DIR}/depends/psa-adac)
+SET (PSA_ADAC_INSTALL_PATH ${CMAKE_BINARY_DIR}/psa-adac)
+INCLUDE (${PSA_ADAC_ROOT}/cmake/psa_adac.cmake)
+ADD_SUBDIRECTORY (${PSA_ADAC_ROOT}/psa-adac/core)
+ADD_SUBDIRECTORY (${PSA_ADAC_ROOT}/psa-adac/sdm)
+
+# secure_debug_manager
+ADD_SUBDIRECTORY (${CMAKE_SOURCE_DIR}/sdm)
+
+# tests
+IF (TESTS)
+    ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/tests)
+ENDIF ()
+
+# debugger example
+IF (RDDI_EXAMPLE)
+    ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/example)
+ENDIF ()
 
 SET (CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR})

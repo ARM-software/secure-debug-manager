@@ -1,13 +1,5 @@
 build/
 output/
-arm_ds/*.dll
-arm_ds/*.so
-arm_ds/*.so.*
-include/rddi*.h
-depends/linux-x86_64/*.so.*
-depends/linux-x86_64/*.so
-depends/win_32-x86_64/*.dll
-depends/win_32-x86_64/*.dll
-depends/win_32-x86_64/*.lib
-*.dot
-*.ttf
+arm_ds/**/*.dll
+arm_ds/**/*.so
+depends/RDDI/

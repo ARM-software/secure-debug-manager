@@ -1,0 +1,34 @@
+diff --git a/include/psa/crypto.h b/include/psa/crypto.h
+index 3c1c109a9..d4a513888 100644
+--- a/include/psa/crypto.h
++++ b/include/psa/crypto.h
+@@ -67,6 +67,14 @@ extern "C" {
+  * of integral types defined in "crypto_types.h". */
+ #include "crypto_values.h"
+ 
++ /* The file "crypto_sizes.h" contains definitions for size calculation
++ * macros whose definitions are implementation-specific. */
++#include "crypto_sizes.h"
++
++ /* The file "crypto_struct.h" contains definitions for
++ * implementation-specific structs that are declared above. */
++#include "crypto_struct.h"
++
+ /** \defgroup initialization Library initialization
+  * @{
+  */
+@@ -3895,14 +3903,6 @@ psa_status_t psa_generate_key(const psa_key_attributes_t *attributes,
+ }
+ #endif
+ 
+-/* The file "crypto_sizes.h" contains definitions for size calculation
+- * macros whose definitions are implementation-specific. */
+-#include "crypto_sizes.h"
+-
+-/* The file "crypto_struct.h" contains definitions for
+- * implementation-specific structs that are declared above. */
+-#include "crypto_struct.h"
+-
+ /* The file "crypto_extra.h" contains vendor-specific definitions. This
+  * can include vendor-defined algorithms, extra functions, etc. */
+ #include "crypto_extra.h"
