@@ -2,4 +2,6 @@ build/
 output/
 arm_ds/**/*.dll
 arm_ds/**/*.so
-depends/RDDI/
+depends/RDDI/**/*.h
+depends/RDDI/**/*.dll
+depends/RDDI/**/*.so*
