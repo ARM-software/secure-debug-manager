@@ -14,9 +14,9 @@ This Secure Debug Manager project contains:
 
 * CMake v3.1 or later.
 * RDDI header files and redistributable libraries. These are available in your Arm Development Studio install directory (`<Install Directory>/sw/debugger/RDDI/`). This is only required if you build the RDDI example.
- * Copy header files to `<this repository>/depends/RDDI/include/`
- * Copy Redistributable and development libraries to `<this repository>/depends/RDDI/lib/<platform>/`
-  * See individual README.txt located in `<this repository>/depends/RDDI/lib/<platform>/` for further details.
+  * Copy header files to `<this repository>/depends/RDDI/include/`
+  * Copy Redistributable and development libraries to `<this repository>/depends/RDDI/lib/<platform>/`
+    * See individual README.txt located in `<this repository>/depends/RDDI/lib/<platform>/` for further details.
 * [Googletest](https://github.com/google/googletest). This is only required if you build tests.
 
 An example directory structure on Linux:
